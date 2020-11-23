@@ -1,0 +1,39 @@
+<app-title [title]="title"></app-title>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Data de Nascimento</th>
+        <th scope="col">Email</th>
+        <th scope="col">Sexo</th>
+        <th scope="col">Ativo</th>
+        <th scope="col">Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <th scope="row">{{ usuario.id }}</th>
+        <td>{{ usuario.nome }}</td>
+        <td>{{ usuario.dataNascimento }}</td>
+        <td>{{ usuario.email }}</td> 
+        <td>{{ usuario.sexo }}</td>
+        <td>
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">          
+            <label class="btn btn-secondary btn-sm">
+              <input type="radio" name="options" id="btnAtivo"> Ativo
+            </label>
+            <label class="btn btn-secondary btn-sm">
+              <input type="radio" name="options" id="btnInativo"> Inativo
+            </label>
+          </div>
+        </td>
+        <td>
+          <div class="btn-group">
+            <button (click)="usuarioSelect(usuario)" type="button" class="btn btn-outline-info btn-sm">Editar</button> 
+            <button type="button" class="btn btn-outline-danger btn-sm"(click)="excluir()">Excluir</button>
+          </div>
+        </td>    
+      </tr>
+    </tbody>
+  </table>

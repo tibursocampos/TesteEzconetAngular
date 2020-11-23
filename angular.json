@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "TesteEzconetAngular"
+    }
+  },
+  "defaultProject": "TesteEzconetAngular",
+  "cli": {
+    "analytics": "54abd15e-61bc-4ce7-b444-60c71fc3091b"
+  }
 }
