@@ -11,12 +11,20 @@
         </div>
         <div class="form-group col-md-4">
           <label for="inputSexo">Sexo</label>
-          <select id="inputSexo" formControlName="sexo" class="form-control">
+          <select id="inputSexo" formControlName="sexoId" class="form-control">
             <option selected>Escolha</option>
-            <option value="1">Masculino</option>
-            <option value="2">Feminino</option>
+            <option value=1>Masculino</option>
+            <option value=2>Feminino</option>
           </select>
         </div>
+        <!--div class="form-group col-md-2">
+          <label for="inputAtivo">Situação</label>
+          <select formControlName="ativo" class="form-control">
+            <option selected>Escolha</option>
+            <option value=1>Ativo</option>
+            <option value=2>Inativo</option>
+          </select>
+        </div-->
     </div>   
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -28,5 +36,9 @@
           <input type="password" class="form-control" formControlName="senha" id="inputSenha">
         </div>
     </div>    
-    <button class="btn btn-primary" type="submit" >Salvar</button>
+    <div class="btn btn-group">
+      <button class="btn btn-primary" type="submit" >Salvar</button>
+      <button class="btn btn-primary" type="submit" (click)="limparForm()">Limpar</button>
+      <button class="btn btn-primary" type="submit" (click)="voltarUsuario()" >Voltar</button>
+  </div>
   </form>

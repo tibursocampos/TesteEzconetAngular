@@ -5,6 +5,6 @@ export class Usuario {
     email :string;
     senha :string;
     ativo :boolean;
-    sexoId :boolean;
+    sexoId :number;
     
 }

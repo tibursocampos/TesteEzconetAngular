@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'usuarios', component: UsuariosComponent},
   {path: 'criar-usuario', component: CriarUsuarioComponent},
-  {path: 'editar-usuario', component: EditarUsuarioComponent}
+  {path: 'editar-usuario/:usuarioId', component: EditarUsuarioComponent}
 ];
 
 @NgModule({

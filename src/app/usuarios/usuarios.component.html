@@ -13,11 +13,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let usuario of usuarios">
-        <th scope="row">{{ usuario.id }}</th>
+        <th scope="row">{{ usuario.usuarioId }}</th>
         <td>{{ usuario.nome }}</td>
         <td>{{ usuario.dataNascimento }}</td>
         <td>{{ usuario.email }}</td> 
-        <td>{{ usuario.sexo }}</td>
+        <td>{{ usuario.sexoId }}</td>
         <td>
           <div class="btn-group btn-group-toggle" data-toggle="buttons">          
             <label class="btn btn-secondary btn-sm">
@@ -30,8 +30,8 @@
         </td>
         <td>
           <div class="btn-group">
-            <button (click)="usuarioSelect(usuario)" type="button" class="btn btn-outline-info btn-sm">Editar</button> 
-            <button type="button" class="btn btn-outline-danger btn-sm"(click)="excluir()">Excluir</button>
+            <button (click)="editar(usuario.usuarioId)" type="button" class="btn btn-outline-info btn-sm">Editar</button> 
+            <button (click)="excluir(usuario.usuarioId)" type="button" class="btn btn-outline-danger btn-sm">Excluir</button>
           </div>
         </td>    
       </tr>

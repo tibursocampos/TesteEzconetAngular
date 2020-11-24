@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  mainURL: 'www.cadastre.com.br'
 };

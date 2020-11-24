@@ -1,6 +1,9 @@
+import { EditarUsuarioComponent } from './../editar-usuario/editar-usuario.component';
+import { UsuarioService } from './../service/usuario.service';
 import { Usuario } from './../Models/Usuario';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios',
@@ -11,25 +14,51 @@ export class UsuariosComponent implements OnInit {
   
   public title = 'Usuários';
   public usuarioSelecionado :Usuario;
+  public usuarioForm: FormGroup;
+  public usuarios: Usuario[];  
   
-  public usuarios = [
-    {id: 1, nome: 'Maria', dataNascimento: '15-05-1980', email: 'maria@testes.com', sexo: 'Feminino', ativo: 'Ativo'},
-    {id: 2, nome: 'João', dataNascimento: '25-12-1989', email: 'joao@testes.com', sexo: 'Masculino', ativo: 'Inativo'},
-    {id: 3, nome: 'Guilherme', dataNascimento: '09-05-1984', email: 'guilherme@testes.com', sexo: 'Masculino', ativo: 'Ativo'}
-  ];
-  
-  constructor() {
+  constructor(private route: Router,
+              private fb: FormBuilder,
+              private usuarioService: UsuarioService) {
+    this.criarForm();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.carregarUsuarios();
   }
   
-  public editar(usuario :Usuario){
-    this.usuarioSelecionado = usuario;    
+  carregarUsuarios() {
+    this.usuarioService.getAll().subscribe(
+      (usuarios :Usuario[]) => {
+        this.usuarios = usuarios;
+      },
+      (erro: any) => {
+        console.error(erro);
+      }
+    );
   }
   
+  criarForm(){
+    this.usuarioForm = this.fb.group({
+      usuadioId:['',Validators.required],
+      nome:['',[Validators.required,Validators.minLength(3), Validators.maxLength(200)]],
+      dataNascimento:['',Validators.required],
+      email:['',Validators.required], 
+      sexoId:['',Validators.required],  
+      ativo:['',Validators.required]      
+    })
+  }
   
-
+  public editar(usuarioId: number){
+    this.route.navigate(["editar-usuario", usuarioId]); 
+  } 
   
-
+  public excluir(usuarioId: number) {  
+    if (confirm("Deseja realmente deletar este usuario ?")) {   
+      this.usuarioService.deleteUsuario(usuarioId).subscribe(() => {            
+        alert('Usuário deletado com sucesso');  
+        this.carregarUsuarios();            
+      });  
+    }  
+  }  
 }
