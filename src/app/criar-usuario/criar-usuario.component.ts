@@ -34,12 +34,15 @@ export class CriarUsuarioComponent implements OnInit {
     this.usuarioForm = this.fb.group({
       nome:['',[Validators.required, Validators.minLength(3), Validators.maxLength(200)]],
       dataNascimento:['',Validators.required],
-      email:['',Validators.required],
-      senha:['',Validators.required],      
+      email:['',[Validators.required, Validators.email]],
+      senha:[''],      
       sexoId:['',Validators.required],
-      ativo:['',Validators.required]
+      ativo:['']
     });
   }
+  
+  get nome(){ return this.usuarioForm.get('nome');}
+  get email(){ return this.usuarioForm.get('email');}
   
   usuarioSubmit(){
     const usuario: Usuario = this.usuarioForm.value;  

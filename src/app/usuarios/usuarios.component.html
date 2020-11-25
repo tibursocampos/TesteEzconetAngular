@@ -12,7 +12,7 @@
 <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope="col">Id</th>
         <th scope="col">Nome</th>
         <th scope="col">Data de Nascimento</th>
         <th scope="col">Email</th>
@@ -29,19 +29,13 @@
         <td>{{ usuario.email }}</td> 
         <td>{{ usuario.sexoId == 1 ? 'Masculino' : 'Feminino' }}</td>
         <td>
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">          
-            <label class="btn btn-secondary btn-sm">
-              <input type="radio" name="options" id="btnAtivo"> Ativo
-            </label>
-            <label class="btn btn-secondary btn-sm">
-              <input type="radio" name="options" id="btnInativo"> Inativo
-            </label>
+          <div class="btn-group">
+            <button (click)="ativarDesativar(usuario.usuarioId)" type="button" class="btn btn-outline-secondary btn-sm">{{usuario.ativo == true ? 'Desativar' : 'Ativar'}}</button>             
           </div>
         </td>
         <td>
           <div class="btn-group">
-            <button (click)="editar(usuario.usuarioId)" type="button" class="btn btn-outline-info btn-sm">Editar</button> 
-            <button (click)="excluir(usuario.usuarioId)" type="button" class="btn btn-outline-danger btn-sm">Excluir</button>
+            <button (click)="editar(usuario.usuarioId)" type="button" class="btn btn-outline-info btn-sm">Editar</button>             
           </div>
         </td>    
       </tr>

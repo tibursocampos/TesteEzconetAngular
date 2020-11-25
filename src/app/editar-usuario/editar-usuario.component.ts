@@ -19,8 +19,8 @@ export class EditarUsuarioComponent implements OnInit {
     usuarioId:[''],
     nome:['',[Validators.required, Validators.minLength(3), Validators.maxLength(200)]],
     dataNascimento:['',Validators.required],
-    email:['',Validators.required],
-    senha:['',Validators.required],
+    email:['',[Validators.required, Validators.email]],
+    senha:[''],
     sexoId:['',Validators.required],
     ativo:['']
   });;
@@ -41,17 +41,21 @@ export class EditarUsuarioComponent implements OnInit {
         
   }
   
+  get nome(){ return this.usuarioEditForm.get('nome');}
+  get email(){ return this.usuarioEditForm.get('email');}
+  
   editarForm(usuario: Usuario){
     let formAtivo = usuario.ativo;
     let ativo: string;
     formAtivo ? ativo = '1' : ativo = '2';
-    //let data = usuario.dataNascimento;
-    //let dataFormatada = data.toLocaleDateString('pt-BR', {timeZone: 'UTC'});
-    //dataFormatada = ;
+    //let dataFormatada = new Date(data).toLocaleDateString('pt-BR', {timeZone: 'UTC'});
+    //let dataNova = new Date(dataFormatada);
+    //console.log(dataFormatada);
+    console.log(usuario.dataNascimento);
     this.usuarioEditForm.setValue({
       usuarioId: usuario.usuarioId,
       nome: usuario.nome,
-      dataNascimento: usuario.dataNascimento,     
+      dataNascimento: new Date(usuario.dataNascimento).toLocaleString(),     
       email: usuario.email,
       senha: usuario.senha,
       sexoId: usuario.sexoId,
