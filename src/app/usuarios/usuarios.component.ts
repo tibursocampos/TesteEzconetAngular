@@ -4,6 +4,7 @@ import { Usuario } from './../Models/Usuario';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 
 @Component({
   selector: 'app-usuarios',
@@ -16,6 +17,8 @@ export class UsuariosComponent implements OnInit {
   public usuarioSelecionado :Usuario;
   public usuarioForm: FormGroup;
   public usuarios: Usuario[];  
+  public usuariosAtivos: Usuario[];
+  public nomeBusca: string;
   
   constructor(private route: Router,
               private fb: FormBuilder,
@@ -28,14 +31,39 @@ export class UsuariosComponent implements OnInit {
   }
   
   carregarUsuarios() {
-    this.usuarioService.getAll().subscribe(
-      (usuarios :Usuario[]) => {
+   this.usuarioService.getAll().subscribe(
+      (usuarios :Usuario[]) => {        
         this.usuarios = usuarios;
+      },
+      (erro: any) => {
+        console.error(erro);
+      });
+  }
+  
+  filtrarAtivos(){
+    this.usuarioService.getByAtivo().subscribe(
+     (usuariosAtivos: Usuario[]) => {
+       this.usuarios = usuariosAtivos;     
+         },
+      (erro: any) => {
+        console.error(erro);
+      });   
+  }
+  
+  buscarNome(){
+    this.usuarioService.getBynome(this.nomeBusca).subscribe(
+      (listaNomes: Usuario[]) => {
+        this.usuarios = listaNomes;
       },
       (erro: any) => {
         console.error(erro);
       }
     );
+  }
+  
+  exibirTodos(){
+    this.carregarUsuarios();
+    this.nomeBusca = '';
   }
   
   criarForm(){
@@ -44,21 +72,22 @@ export class UsuariosComponent implements OnInit {
       nome:['',[Validators.required,Validators.minLength(3), Validators.maxLength(200)]],
       dataNascimento:['',Validators.required],
       email:['',Validators.required], 
-      sexoId:['',Validators.required],  
+      sexoId:['',Validators.required], 
       ativo:['',Validators.required]      
     })
   }
   
-  public editar(usuarioId: number){
+  editar(usuarioId: number){
     this.route.navigate(["editar-usuario", usuarioId]); 
   } 
   
-  public excluir(usuarioId: number) {  
+  excluir(usuarioId: number) {  
     if (confirm("Deseja realmente deletar este usuario ?")) {   
       this.usuarioService.deleteUsuario(usuarioId).subscribe(() => {            
         alert('Usuário deletado com sucesso');  
         this.carregarUsuarios();            
       });  
     }  
-  }  
+  }   
+  
 }

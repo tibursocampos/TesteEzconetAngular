@@ -1,14 +1,14 @@
 <app-title [title]="title"></app-title>
-<form [formGroup]="usuarioEditForm" (submit)="salvar()">
+<form [formGroup]="usuarioEditForm" >
     <div class="form-group">
-      <input type="hidden" class="form-control" formControlName="usuarioId">
+      <input type="hidden" class="form-control" value="{{ userId }}" formControlName="usuarioId" >
       <label for="formGroupExampleInput">Nome</label>
       <input type="text" class="form-control" formControlName="nome">
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputDataNascimento">Data de Nascimento</label>
-          <input type="text" class="form-control" formControlName="dataNascimento">
+          <input type="date" class="form-control" formControlName="dataNascimento">
         </div>
         <div class="form-group col-md-4">
           <label for="sexoId">Sexo</label>
@@ -18,14 +18,14 @@
             <option value="2">Feminino</option>
           </select>
         </div>
-        <!--div class="form-group col-md-2">
+        <div class="form-group col-md-2">
           <label for="inputAtivo">Situação</label>
-          <select formControlName="ativo" id="ativo" class="form-control">
+          <select formControlName="ativo" class="form-control">
             <option selected>Escolha</option>
             <option value="1">Ativo</option>
             <option value="2">Inativo</option>
           </select>
-        </div-->
+        </div>
     </div>   
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -37,7 +37,9 @@
           <input type="password" class="form-control" formControlName="senha">
         </div>
     </div>    
-    <button class="btn btn-primary" type="submit">Salvar</button>    
+    <button (click)="salvar()" class="btn btn-primary" type="submit">Salvar</button>    
+    <button (click)="excluir(userId)" class="btn btn-danger m-3" type="menu">Excluir</button>
+    <button (click)="voltar()" class="btn btn-primary " type="menu">Voltar</button>
   </form>
   <br>
-  <button (click)="voltar()" class="btn btn-primary" type="menu">Voltar</button>
+  

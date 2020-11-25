@@ -16,11 +16,9 @@ export class CriarUsuarioComponent implements OnInit {
   
   public title = 'Adicionar usuário';
   public usuarioForm :FormGroup;
-  public usuario: Usuario;
-  public dataSaved = false;
+  public usuario: Usuario;  
   public allUsuarios: Observable<Usuario[]>;
-  public usuarioIdUpdate = null;
-  public message = null;
+ 
 
   constructor(private fb: FormBuilder,
               private route: Router,
@@ -39,16 +37,16 @@ export class CriarUsuarioComponent implements OnInit {
       email:['',Validators.required],
       senha:['',Validators.required],      
       sexoId:['',Validators.required],
-      //ativo:['',Validators.required]
+      ativo:['',Validators.required]
     });
   }
   
   usuarioSubmit(){
     const usuario: Usuario = this.usuarioForm.value;  
+    usuario.ativo = true;
     usuario.sexoId = Number(usuario.sexoId);
     this.usuarioService.createUsuario(usuario).subscribe(
       () => {
-        console.log(usuario);
         alert("Usuário criado com sucesso !!!");
         this.usuarioForm.reset();
       }

@@ -1,4 +1,14 @@
 <app-title [title]="title"></app-title>
+<div class="input-group mb-3 col-md-5">
+  <input type="text" class="form-control" [(ngModel)]="nomeBusca" placeholder="Buscar usuário por nome" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" (click)="buscarNome()">Buscar</button>
+  </div>  
+</div>
+<div class="input-group mb-3 col-md-6">
+  <button class="btn btn-outline-secondary" type="button" (click)="filtrarAtivos()">Filtrar usuários ativos</button>
+  <button class="btn btn-outline-secondary ml-3" type="button" (click)="exibirTodos()">Exibir todos usuários</button>  
+</div>
 <table class="table table-hover">
     <thead>
       <tr>
@@ -11,13 +21,13 @@
         <th scope="col">Opções</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody>      
       <tr *ngFor="let usuario of usuarios">
         <th scope="row">{{ usuario.usuarioId }}</th>
         <td>{{ usuario.nome }}</td>
-        <td>{{ usuario.dataNascimento }}</td>
+        <td>{{ usuario.dataNascimento | date:"dd/MM/yyyy" }}</td>
         <td>{{ usuario.email }}</td> 
-        <td>{{ usuario.sexoId }}</td>
+        <td>{{ usuario.sexoId == 1 ? 'Masculino' : 'Feminino' }}</td>
         <td>
           <div class="btn-group btn-group-toggle" data-toggle="buttons">          
             <label class="btn btn-secondary btn-sm">

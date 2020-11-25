@@ -10,7 +10,9 @@ import { Observable } from 'rxjs';
 })
 export class UsuarioService {
         
-    baseUrl = `${environment.mainURL}/api/TesteEzconet/usuarios`
+    baseUrl = `${environment.mainURL}/api/TesteEzconet/usuarios`;
+    urlBuscaAtivos = `${environment.mainURL}/api/TesteEzconet/usuarios/ativo`;
+    urlBuscaNome = `${environment.mainURL}/api/TesteEzconet/usuarios/busca?nome`;
     
     constructor(private http: HttpClient) {}  
     
@@ -23,12 +25,12 @@ export class UsuarioService {
         return this.http.get<Usuario>(`${this.baseUrl}/${id}`);
     }
     
-    getBynome(nome: string) :Observable<Usuario>{
-        return this.http.get<Usuario>(`${this.baseUrl}/${nome}`);
+    getBynome(nome: string) :Observable<Usuario[]>{
+        return this.http.get<Usuario[]>(`${this.urlBuscaNome}=${nome}`);
     }
     
-    getByAtivo() :Observable<Usuario>{
-        return this.http.get<Usuario>(`${this.baseUrl}/'ativo'`);
+    getByAtivo() :Observable<Usuario[]>{
+        return this.http.get<Usuario[]>(`${this.urlBuscaAtivos}`);
     }
     
     createUsuario(usuario: Usuario) :Observable<Usuario>{

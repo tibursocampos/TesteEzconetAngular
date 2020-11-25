@@ -12,7 +12,6 @@ import { NavComponent } from './nav/nav.component';
 import { TitleComponent } from './title/title.component';
 import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 @NgModule({
   declarations: [
     AppComponent,
