@@ -1,5 +1,4 @@
 import { UsuarioService } from './../service/usuario.service';
-import { DadosService } from './../service/dados.service';
 import { Usuario } from './../Models/Usuario';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -19,8 +18,8 @@ export class EditarUsuarioComponent implements OnInit {
     usuarioId:[''],
     nome:['',[Validators.required, Validators.minLength(3), Validators.maxLength(200)]],
     dataNascimento:['',Validators.required],
-    email:['',Validators.required],
-    senha:['',Validators.required],
+    email:['',[Validators.required, Validators.email]],
+    senha:[''],
     sexoId:['',Validators.required],
     ativo:['']
   });;
@@ -41,17 +40,17 @@ export class EditarUsuarioComponent implements OnInit {
         
   }
   
+  get nome(){ return this.usuarioEditForm.get('nome');}
+  get email(){ return this.usuarioEditForm.get('email');}
+  
   editarForm(usuario: Usuario){
     let formAtivo = usuario.ativo;
     let ativo: string;
-    formAtivo ? ativo = '1' : ativo = '2';
-    //let data = usuario.dataNascimento;
-    //let dataFormatada = data.toLocaleDateString('pt-BR', {timeZone: 'UTC'});
-    //dataFormatada = ;
+    formAtivo ? ativo = '1' : ativo = '2';  
     this.usuarioEditForm.setValue({
       usuarioId: usuario.usuarioId,
       nome: usuario.nome,
-      dataNascimento: usuario.dataNascimento,     
+      dataNascimento: usuario.dataNascimento,
       email: usuario.email,
       senha: usuario.senha,
       sexoId: usuario.sexoId,
@@ -65,8 +64,12 @@ export class EditarUsuarioComponent implements OnInit {
     let ativo = String(usuario.ativo);
     ativo == '1' ? usuario.ativo = true : usuario.ativo = false;
     this.usuarioService.editUsuario(usuario.usuarioId, usuario).subscribe(
+      dados => {
+        console.log(dados);
+      },
+      error => console.error(error),
       () => {
-        alert("Usuário alterado com sucesso !!!");
+        alert("Usuário alterado com sucesso !!!"); 
         this.usuarioEditForm.reset();
         this.router.navigate(['usuarios']);
       }
@@ -75,12 +78,18 @@ export class EditarUsuarioComponent implements OnInit {
   
   excluir(usuarioId: number){
     if (confirm("Deseja realmente deletar este usuario ?")) {   
-      this.usuarioService.deleteUsuario(usuarioId).subscribe(() => {            
-        alert('Usuário deletado com sucesso');
-        this.router.navigate(['usuarios']);               
-      });  
-    }  
+      this.usuarioService.deleteUsuario(usuarioId).subscribe(dados => {
+        console.log(dados);
+      },
+      error => console.error(error),
+      () => {
+        alert("Usuário deletado com sucesso !!!"); 
+        this.usuarioEditForm.reset();
+        this.router.navigate(['usuarios']);
+      }
+    );
   }
+}
    
   voltar(){
     this.router.navigate(['usuarios']);  

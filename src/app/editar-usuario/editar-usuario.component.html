@@ -4,6 +4,11 @@
       <input type="hidden" class="form-control" value="{{ userId }}" formControlName="usuarioId" >
       <label for="formGroupExampleInput">Nome</label>
       <input type="text" class="form-control" formControlName="nome">
+      <div *ngIf="!nome.pristine && nome.errors"> 
+        <p *ngIf="nome.errors.required">Nome é obrigatório.</p>
+        <p *ngIf="nome.errors.minlength">Nome deve ter no mínimo 3 caracteres.</p>
+        <p *ngIf="nome.errors.maxlenght">Nome deve ter no máximo 200 caracteres.</p>
+      </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -31,13 +36,16 @@
         <div class="form-group col-md-6">
           <label for="inputEmail4">Email</label>
           <input type="email" class="form-control" formControlName="email">
+          <div *ngIf="!email.pristine && email.errors">
+            <p *ngIf="email.errors.email"> Digite um e-mail válido.</p>
+          </div>
         </div>
         <div class="form-group col-md-6">
           <label for="inputPassword4">Senha</label>
           <input type="password" class="form-control" formControlName="senha">
         </div>
     </div>    
-    <button (click)="salvar()" class="btn btn-primary" type="submit">Salvar</button>    
+    <button [disabled]="!usuarioEditForm.valid" (click)="salvar()" class="btn btn-primary" type="submit">Salvar</button>    
     <button (click)="excluir(userId)" class="btn btn-danger m-3" type="menu">Excluir</button>
     <button (click)="voltar()" class="btn btn-primary " type="menu">Voltar</button>
   </form>

@@ -34,21 +34,28 @@ export class CriarUsuarioComponent implements OnInit {
     this.usuarioForm = this.fb.group({
       nome:['',[Validators.required, Validators.minLength(3), Validators.maxLength(200)]],
       dataNascimento:['',Validators.required],
-      email:['',Validators.required],
-      senha:['',Validators.required],      
+      email:['',[Validators.required, Validators.email]],
+      senha:[''],      
       sexoId:['',Validators.required],
-      ativo:['',Validators.required]
+      ativo:['']
     });
   }
+  
+  get nome(){ return this.usuarioForm.get('nome');}
+  get email(){ return this.usuarioForm.get('email');}
   
   usuarioSubmit(){
     const usuario: Usuario = this.usuarioForm.value;  
     usuario.ativo = true;
     usuario.sexoId = Number(usuario.sexoId);
     this.usuarioService.createUsuario(usuario).subscribe(
+      dados => {
+        console.log(dados);
+      },
+      error => console.error(error),
       () => {
-        alert("Usuário criado com sucesso !!!");
-        this.usuarioForm.reset();
+        alert("Usuário criado com sucesso !!!"); 
+        this.usuarioForm.reset();        
       }
     );
   }  

@@ -1,10 +1,8 @@
-import { EditarUsuarioComponent } from './../editar-usuario/editar-usuario.component';
 import { UsuarioService } from './../service/usuario.service';
 import { Usuario } from './../Models/Usuario';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 
 @Component({
   selector: 'app-usuarios',
@@ -81,13 +79,19 @@ export class UsuariosComponent implements OnInit {
     this.route.navigate(["editar-usuario", usuarioId]); 
   } 
   
-  excluir(usuarioId: number) {  
-    if (confirm("Deseja realmente deletar este usuario ?")) {   
-      this.usuarioService.deleteUsuario(usuarioId).subscribe(() => {            
-        alert('Usuário deletado com sucesso');  
-        this.carregarUsuarios();            
-      });  
-    }  
-  }   
+  
+  ativarDesativar(usuarioId: number){
+    this.usuarioService.getById(usuarioId).subscribe(
+      x => {if(confirm(`Deseja ${x.ativo ? 'desativar' : 'ativar'} o usuário ${x.nome} ?`))
+              x.ativo ? x.ativo = false : x.ativo = true;
+              this.usuarioService.editUsuario(usuarioId, x).subscribe(
+                () => {
+                  alert('Usuário alterado com sucesso !!!'),
+                  this.carregarUsuarios();
+                }
+              )
+            }
+    );
+  }
   
 }
