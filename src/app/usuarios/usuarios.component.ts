@@ -1,11 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { EditarUsuarioComponent } from './../editar-usuario/editar-usuario.component';
 import { UsuarioService } from './../service/usuario.service';
 import { Usuario } from './../Models/Usuario';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 
 @Component({
   selector: 'app-usuarios',

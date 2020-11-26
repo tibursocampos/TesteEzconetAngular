@@ -1,5 +1,4 @@
 import { UsuarioService } from './../service/usuario.service';
-import { DadosService } from './../service/dados.service';
 import { Usuario } from './../Models/Usuario';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -47,15 +46,11 @@ export class EditarUsuarioComponent implements OnInit {
   editarForm(usuario: Usuario){
     let formAtivo = usuario.ativo;
     let ativo: string;
-    formAtivo ? ativo = '1' : ativo = '2';
-    //let dataFormatada = new Date(data).toLocaleDateString('pt-BR', {timeZone: 'UTC'});
-    //let dataNova = new Date(dataFormatada);
-    //console.log(dataFormatada);
-    console.log(usuario.dataNascimento);
+    formAtivo ? ativo = '1' : ativo = '2';  
     this.usuarioEditForm.setValue({
       usuarioId: usuario.usuarioId,
       nome: usuario.nome,
-      dataNascimento: new Date(usuario.dataNascimento).toLocaleString(),     
+      dataNascimento: usuario.dataNascimento,
       email: usuario.email,
       senha: usuario.senha,
       sexoId: usuario.sexoId,

@@ -1,9 +1,10 @@
 import { Usuario } from './../Models/Usuario';
 import { environment } from './../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -16,9 +17,8 @@ export class UsuarioService {
     
     constructor(private http: HttpClient) {}  
     
-    
     getAll() :Observable<Usuario[]>{
-        return this.http.get<Usuario[]>(`${this.baseUrl}`);        
+        return this.http.get<Usuario[]>(`${this.baseUrl}`);
     }
     
     getById(id :number) :Observable<Usuario>{
@@ -43,7 +43,8 @@ export class UsuarioService {
     
     deleteUsuario(id: number) :Observable<Usuario>{
         return this.http.delete<Usuario>(`${this.baseUrl}/${id}`);
-    }
+    }  
+    
     
     
 }
