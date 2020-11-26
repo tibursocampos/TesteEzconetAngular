@@ -64,8 +64,12 @@ export class EditarUsuarioComponent implements OnInit {
     let ativo = String(usuario.ativo);
     ativo == '1' ? usuario.ativo = true : usuario.ativo = false;
     this.usuarioService.editUsuario(usuario.usuarioId, usuario).subscribe(
+      dados => {
+        console.log(dados);
+      },
+      error => console.error(error),
       () => {
-        alert("Usuário alterado com sucesso !!!");
+        alert("Usuário alterado com sucesso !!!"); 
         this.usuarioEditForm.reset();
         this.router.navigate(['usuarios']);
       }
@@ -74,12 +78,18 @@ export class EditarUsuarioComponent implements OnInit {
   
   excluir(usuarioId: number){
     if (confirm("Deseja realmente deletar este usuario ?")) {   
-      this.usuarioService.deleteUsuario(usuarioId).subscribe(() => {            
-        alert('Usuário deletado com sucesso');
-        this.router.navigate(['usuarios']);               
-      });  
-    }  
+      this.usuarioService.deleteUsuario(usuarioId).subscribe(dados => {
+        console.log(dados);
+      },
+      error => console.error(error),
+      () => {
+        alert("Usuário deletado com sucesso !!!"); 
+        this.usuarioEditForm.reset();
+        this.router.navigate(['usuarios']);
+      }
+    );
   }
+}
    
   voltar(){
     this.router.navigate(['usuarios']);  

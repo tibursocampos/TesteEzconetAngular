@@ -49,9 +49,13 @@ export class CriarUsuarioComponent implements OnInit {
     usuario.ativo = true;
     usuario.sexoId = Number(usuario.sexoId);
     this.usuarioService.createUsuario(usuario).subscribe(
+      dados => {
+        console.log(dados);
+      },
+      error => console.error(error),
       () => {
-        alert("Usuário criado com sucesso !!!");
-        this.usuarioForm.reset();
+        alert("Usuário criado com sucesso !!!"); 
+        this.usuarioForm.reset();        
       }
     );
   }  
